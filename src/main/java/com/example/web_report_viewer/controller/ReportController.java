@@ -1,0 +1,46 @@
+package com.example.web_report_viewer.controller;
+
+import com.example.web_report_viewer.service.ReportService;
+import net.sf.jasperreports.engine.JRException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ReportController {
+
+    @Autowired
+    private ReportService reportService;
+
+    @GetMapping("/report")
+    public ResponseEntity<byte[]> generateReport(@RequestParam String format, @RequestParam Long sheetId){
+        try {
+            byte[] report = reportService.exportReport(format, sheetId);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report."+format)
+                    .contentType(getMediaTypeForFormat(format))
+                    .body(report);
+        } catch (JRException e){
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    private MediaType getMediaTypeForFormat(String format){
+        switch (format.toLowerCase()){
+            case "pdf":
+                return MediaType.APPLICATION_PDF;
+            case "excel":
+                return MediaType.parseMediaType("application/vnd.ms-excel");
+            case "word":
+                return MediaType.parseMediaType("application/msword");
+            default:
+                return MediaType.APPLICATION_OCTET_STREAM;
+
+        }
+    }
+}
