@@ -11,12 +11,20 @@ public class TransmissionSheet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String numBordereau;
-    private String provenance;
-    private String destination;
-    private int nbreCourrier;
+    @Column(name = "date_emission")
     private Date dateEmission;
 
+    @Column(name = "destination")
+    private String destination;
+
+    @Column(name = "nbre_courrier")
+    private Integer nbreCourrier;
+
+    @Column(name = "num_bordereau")
+    private String numBordereau;
+
+    @Column(name = "provenance")
+    private String provenance;
     @OneToMany(mappedBy = "transmissionSheet", cascade = CascadeType.ALL)
     private List<Courier> couriers;
 

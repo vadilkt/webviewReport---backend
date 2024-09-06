@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import net.sf.jasperreports.engine.*;
 import org.springframework.util.ResourceUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 @Service
@@ -27,18 +24,25 @@ public class CourrierService {
 
     @Autowired
     private CourrierRepository courrierRepository;
+
+    @Autowired
     private TransmissionSheetRepository transmissionSheetRepository;
 
-    public byte[] exportReport(String reportFormat, Long sheetId) throws FileNotFoundException,JRException{
+    public byte[] exportReport(String reportFormat, Long sheetId) throws FileNotFoundException, JRException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Optional<TransmissionSheet> optionalTransmissionSheet = transmissionSheetRepository.findById(sheetId);
-        if(!optionalTransmissionSheet.isPresent()){
-            throw new FileNotFoundException("Aucun bordereau n'a été trouvé avec cet ID: "+sheetId);
+
+        if (!optionalTransmissionSheet.isPresent()) {
+            throw new FileNotFoundException("Aucun bordereau n'a été trouvé avec cet ID: " + sheetId);
         }
+
         TransmissionSheet sheet = optionalTransmissionSheet.get();
         List<Courier> couriers = courrierRepository.findByTransmissionSheet(sheet);
-        File file = ResourceUtils.getFile("classpath: courier.jrxml");
+
+
+        File file = ResourceUtils.getFile("classpath:courrier.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+
 
         JRBeanCollectionDataSource couriersDataSource = new JRBeanCollectionDataSource(couriers);
         Map<String, Object> parameters = new HashMap<>();
@@ -50,36 +54,31 @@ public class CourrierService {
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 
-        if(reportFormat.equalsIgnoreCase("pdf")){
-            return JasperExportManager.exportReportToPdf(jasperPrint);
-        } else if (reportFormat.equalsIgnoreCase("excel")){
-            JRXlsExporter exporter = new JRXlsExporter();
-
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-
-            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
-            configuration.setDetectCellType(true);
-            configuration.setOnePagePerSheet(false);
-            configuration.setRemoveEmptySpaceBetweenRows(true);
-            exporter.setConfiguration(configuration);
-            exporter.exportReport();
-            return outputStream.toByteArray();
-        } else if (reportFormat.equalsIgnoreCase("word")) {
-            JRDocxExporter exporter = new JRDocxExporter();
-
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-
-            SimpleDocxReportConfiguration configuration = new SimpleDocxReportConfiguration();
-            configuration.setFlexibleRowHeight(true);
-            exporter.setConfiguration(configuration);
-
-            exporter.exportReport();
-            return outputStream.toByteArray();
+        switch (reportFormat.toLowerCase()) {
+            case "pdf":
+                return JasperExportManager.exportReportToPdf(jasperPrint);
+            case "excel":
+                JRXlsExporter xlsExporter = new JRXlsExporter();
+                xlsExporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+                xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+                SimpleXlsxReportConfiguration xlsxConfiguration = new SimpleXlsxReportConfiguration();
+                xlsxConfiguration.setDetectCellType(true);
+                xlsxConfiguration.setOnePagePerSheet(false);
+                xlsxConfiguration.setRemoveEmptySpaceBetweenRows(true);
+                xlsExporter.setConfiguration(xlsxConfiguration);
+                xlsExporter.exportReport();
+                return outputStream.toByteArray();
+            case "word":
+                JRDocxExporter docxExporter = new JRDocxExporter();
+                docxExporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+                docxExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+                SimpleDocxReportConfiguration docxConfiguration = new SimpleDocxReportConfiguration();
+                docxConfiguration.setFlexibleRowHeight(true);
+                docxExporter.setConfiguration(docxConfiguration);
+                docxExporter.exportReport();
+                return outputStream.toByteArray();
+            default:
+                throw new IllegalArgumentException("Format de rapport non supporté: " + reportFormat);
         }
-
-        return null;
     }
-
 }

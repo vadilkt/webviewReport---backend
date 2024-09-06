@@ -19,6 +19,9 @@ public class ReportController {
     @GetMapping("/report")
     public ResponseEntity<byte[]> generateReport(@RequestParam String format, @RequestParam Long sheetId){
         try {
+            if(format == null || format.isEmpty() || sheetId==null){
+                return ResponseEntity.badRequest().body("Format ou Id de bordereau non spécifié".getBytes());
+            }
             System.out.println("Je marche");
             byte[] report = courrierService.exportReport(format, sheetId);
             return ResponseEntity.ok()
@@ -27,7 +30,10 @@ public class ReportController {
                     .body(report);
         } catch (JRException e){
             e.printStackTrace();
-            return ResponseEntity.status(500).build();
+            return ResponseEntity.status(500).body("Erreur lors de la génération du rapport".getBytes());
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Erreur interne du serveur".getBytes());
         }
     }
 
