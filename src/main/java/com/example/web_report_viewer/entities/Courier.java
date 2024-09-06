@@ -11,15 +11,23 @@ public class Courier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String courrierNumber;
-    private String sender;
-    private String subject;
+    private String numCourrier;
+    private String expediteur;
+    private String objet;
     private Date courrierDate;
     private String dossierNumber;
 
     @ManyToOne
     @JoinColumn(name="transmission_sheet_id")
-    private TransmissionSheet transmissionSheet;
+    TransmissionSheet transmissionSheet;
+
+    public TransmissionSheet getTransmissionSheet() {
+        return transmissionSheet;
+    }
+
+    public void setTransmissionSheet(TransmissionSheet transmissionSheet) {
+        this.transmissionSheet = transmissionSheet;
+    }
 
     @OneToMany(mappedBy = "courier", cascade = CascadeType.ALL)
     private List<Attachment> attachments;
@@ -32,28 +40,28 @@ public class Courier {
         this.id = id;
     }
 
-    public String getCourrierNumber() {
-        return courrierNumber;
+    public String getNumCourrier() {
+        return numCourrier;
     }
 
-    public void setCourrierNumber(String courrierNumber) {
-        this.courrierNumber = courrierNumber;
+    public void setNumCourrier(String numCourrier) {
+        this.numCourrier = numCourrier;
     }
 
-    public String getSender() {
-        return sender;
+    public String getExpediteur() {
+        return expediteur;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setExpediteur(String expediteur) {
+        this.expediteur = expediteur;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getObjet() {
+        return objet;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setObjet(String objet) {
+        this.objet = objet;
     }
 
     public Date getCourrierDate() {
@@ -70,14 +78,6 @@ public class Courier {
 
     public void setDossierNumber(String dossierNumber) {
         this.dossierNumber = dossierNumber;
-    }
-
-    public TransmissionSheet getTransmissionSheet() {
-        return transmissionSheet;
-    }
-
-    public void setTransmissionSheet(TransmissionSheet transmissionSheet) {
-        this.transmissionSheet = transmissionSheet;
     }
 
     public List<Attachment> getAttachments() {

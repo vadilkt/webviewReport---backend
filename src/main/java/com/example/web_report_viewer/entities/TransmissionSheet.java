@@ -11,10 +11,11 @@ public class TransmissionSheet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String numBordereau;
     private String provenance;
     private String destination;
-    private Date emissionDate;
-    private Integer courrierCount;
+    private int nbreCourrier;
+    private Date dateEmission;
 
     @OneToMany(mappedBy = "transmissionSheet", cascade = CascadeType.ALL)
     private List<Courier> couriers;
@@ -25,6 +26,14 @@ public class TransmissionSheet {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNumBordereau() {
+        return numBordereau;
+    }
+
+    public void setNumBordereau(String numBordereau) {
+        this.numBordereau = numBordereau;
     }
 
     public String getProvenance() {
@@ -43,20 +52,20 @@ public class TransmissionSheet {
         this.destination = destination;
     }
 
-    public Date getEmissionDate() {
-        return emissionDate;
+    public int getNbreCourrier() {
+        return nbreCourrier;
     }
 
-    public void setEmissionDate(Date emissionDate) {
-        this.emissionDate = emissionDate;
+    public void setNbreCourrier(int nbreCourrier) {
+        this.nbreCourrier = nbreCourrier;
     }
 
-    public Integer getCourrierCount() {
-        return courrierCount;
+    public Date getDateEmission() {
+        return dateEmission;
     }
 
-    public void setCourrierCount(Integer courrierCount) {
-        this.courrierCount = courrierCount;
+    public void setDateEmission(Date dateEmission) {
+        this.dateEmission = dateEmission;
     }
 
     public List<Courier> getCouriers() {

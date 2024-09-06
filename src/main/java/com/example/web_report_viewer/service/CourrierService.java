@@ -1,9 +1,10 @@
 package com.example.web_report_viewer.service;
 
+import com.example.web_report_viewer.entities.Courier;
 import com.example.web_report_viewer.entities.TransmissionSheet;
+import com.example.web_report_viewer.repository.CourrierRepository;
 import com.example.web_report_viewer.repository.TransmissionSheetRepository;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.export.SimpleDocxReportConfiguration;
@@ -13,31 +14,38 @@ import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import net.sf.jasperreports.engine.*;
+import org.springframework.util.ResourceUtils;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
-public class ReportService {
+public class CourrierService {
 
     @Autowired
+    private CourrierRepository courrierRepository;
     private TransmissionSheetRepository transmissionSheetRepository;
 
-    public byte[] exportReport(String reportFormat, Long sheetId) throws JRException{
+    public byte[] exportReport(String reportFormat, Long sheetId) throws FileNotFoundException,JRException{
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        TransmissionSheet sheet= transmissionSheetRepository.findById(sheetId)
-                .orElseThrow(()-> new IllegalArgumentException("Bordereau d'expédition inexistant pour l'id: "+sheetId));
+        Optional<TransmissionSheet> optionalTransmissionSheet = transmissionSheetRepository.findById(sheetId);
+        if(!optionalTransmissionSheet.isPresent()){
+            throw new FileNotFoundException("Aucun bordereau n'a été trouvé avec cet ID: "+sheetId);
+        }
+        TransmissionSheet sheet = optionalTransmissionSheet.get();
+        List<Courier> couriers = courrierRepository.findByTransmissionSheet(sheet);
+        File file = ResourceUtils.getFile("classpath: courier.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 
-        InputStream reportStream = getClass().getResourceAsStream("/reports/transmissionSheet.jrxml");
-        JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
-
-        JRBeanCollectionDataSource couriersDataSource = new JRBeanCollectionDataSource(sheet.getCouriers());
+        JRBeanCollectionDataSource couriersDataSource = new JRBeanCollectionDataSource(couriers);
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("provenance", sheet.getProvenance());
         parameters.put("destination", sheet.getDestination());
-        parameters.put("emissionDate", sheet.getEmissionDate());
-        parameters.put("courrierCount", sheet.getCourrierCount());
+        parameters.put("emissionDate", sheet.getDateEmission());
+        parameters.put("courrierCount", couriers.size());
         parameters.put("couriersDataSource", couriersDataSource);
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());

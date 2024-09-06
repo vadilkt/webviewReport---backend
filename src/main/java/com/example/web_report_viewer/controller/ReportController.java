@@ -1,6 +1,6 @@
 package com.example.web_report_viewer.controller;
 
-import com.example.web_report_viewer.service.ReportService;
+import com.example.web_report_viewer.service.CourrierService;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReportController {
 
     @Autowired
-    private ReportService reportService;
+    private CourrierService courrierService;
 
     @GetMapping("/report")
     public ResponseEntity<byte[]> generateReport(@RequestParam String format, @RequestParam Long sheetId){
         try {
-            byte[] report = reportService.exportReport(format, sheetId);
+            System.out.println("Je marche");
+            byte[] report = courrierService.exportReport(format, sheetId);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report."+format)
                     .contentType(getMediaTypeForFormat(format))
