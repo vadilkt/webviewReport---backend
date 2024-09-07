@@ -50,9 +50,15 @@ public class CourrierService {
         parameters.put("destination", sheet.getDestination());
         parameters.put("emissionDate", sheet.getDateEmission());
         parameters.put("courrierCount", couriers.size());
-        parameters.put("couriersDataSource", couriersDataSource);
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, couriersDataSource);
+
+        if (jasperPrint != null) {
+            System.out.println("Le rapport a été généré avec succès.");// Enregistrez ou affichez le rapport
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "C://Users//Vadil Kwekam/rapport2.pdf");
+        } else {
+            System.out.println("Erreur : Le rapport n'a pas été généré.");
+        }
 
         switch (reportFormat.toLowerCase()) {
             case "pdf":

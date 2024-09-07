@@ -17,6 +17,10 @@ public class Courier {
     private Date courrierDate;
     private String dossierNumber;
 
+    @OneToMany(mappedBy = "courier", cascade = CascadeType.ALL)
+    private List<Attachment> attachments;
+
+
     @ManyToOne
     @JoinColumn(name="transmission_sheet_id")
     TransmissionSheet transmissionSheet;
@@ -28,9 +32,6 @@ public class Courier {
     public void setTransmissionSheet(TransmissionSheet transmissionSheet) {
         this.transmissionSheet = transmissionSheet;
     }
-
-    @OneToMany(mappedBy = "courier", cascade = CascadeType.ALL)
-    private List<Attachment> attachments;
 
     public Long getId() {
         return id;
