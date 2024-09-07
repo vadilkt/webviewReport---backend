@@ -46,16 +46,17 @@ public class CourrierService {
 
         JRBeanCollectionDataSource couriersDataSource = new JRBeanCollectionDataSource(couriers);
         Map<String, Object> parameters = new HashMap<>();
+        parameters.put("num_bordereau", sheet.getNumBordereau());
         parameters.put("provenance", sheet.getProvenance());
         parameters.put("destination", sheet.getDestination());
-        parameters.put("emissionDate", sheet.getDateEmission());
-        parameters.put("courrierCount", couriers.size());
+        parameters.put("date_emission", sheet.getDateEmission());
+        parameters.put("nbre_courrier", couriers.size());
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, couriersDataSource);
 
         if (jasperPrint != null) {
             System.out.println("Le rapport a été généré avec succès.");// Enregistrez ou affichez le rapport
-            JasperExportManager.exportReportToPdfFile(jasperPrint, "C://Users//Vadil Kwekam/rapport2.pdf");
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "C://Users//Vadil Kwekam/rapport5.pdf");
         } else {
             System.out.println("Erreur : Le rapport n'a pas été généré.");
         }
