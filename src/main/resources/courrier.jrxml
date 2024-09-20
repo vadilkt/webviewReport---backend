@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport name="Transmission_sheet" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Transmission_sheet" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c4d5388a-0eb7-45ea-b83b-5c713ba397c1">
     <parameter name="provenance" class="java.lang.String"/>
     <parameter name="num_bordereau" class="java.lang.String"/>
     <parameter name="destination" class="java.lang.String"/>
     <parameter name="date_emission" class="java.util.Date"/>
     <parameter name="nbre_courrier" class="java.lang.Integer"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
 
     <field name="numCourrier" class="java.lang.String"/>
     <field name="expediteur" class="java.lang.String"/>
@@ -12,177 +16,284 @@
     <field name="courrierDate" class="java.util.Date"/>
     <field name="attachments" class="java.util.List"/>
     <field name="dossierNumber" class="java.lang.String"/>
-
-    <background/>
-
+    <sortField name="numCourrier"/>
+    <group name="Groupe_numCourrier">
+        <groupExpression><![CDATA[$F{numCourrier}]]></groupExpression>
+        <groupFooter>
+            <band height="3">
+                <textField>
+                    <reportElement mode="Opaque" x="0" y="0" width="555" height="3" backcolor="#C4B939" uuid="18e9539e-a635-407a-aca1-170353c2f90b"/>
+                    <box>
+                        <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    </box>
+                </textField>
+            </band>
+        </groupFooter>
+    </group>
     <pageHeader>
-        <band height="80">
+        <band height="76" splitType="Stretch">
             <staticText>
-                <reportElement x="10" y="0" width="180" height="19"/>
+                <reportElement x="10" y="0" width="180" height="19" uuid="61bb4f4a-5c23-4985-a01b-1efb40b69c5f"/>
                 <textElement>
-                    <font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+                    <font fontName="Comic Sans MS" size="12" isBold="true" isItalic="true" isUnderline="true"/>
                 </textElement>
                 <text><![CDATA[Bordereau de transmission N°:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="10" y="20" width="100" height="14"/>
+                <reportElement x="10" y="20" width="66" height="14" uuid="e6467a61-ad4d-4dba-8efa-3a49d27c911b"/>
                 <textElement>
-                    <font isBold="true"/>
+                    <font fontName="Comic Sans MS" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Provenance:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="9" y="36" width="100" height="14"/>
+                <reportElement x="9" y="36" width="67" height="14" uuid="399c3fcc-4875-40fa-b387-0053d830e218"/>
                 <textElement>
-                    <font isBold="true"/>
+                    <font fontName="Comic Sans MS" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Destination:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="9" y="52" width="100" height="14"/>
+                <reportElement x="9" y="52" width="71" height="14" uuid="7eb35104-0df6-49a5-81ff-c28c8fdf5963"/>
                 <textElement>
-                    <font isBold="true"/>
+                    <font fontName="Comic Sans MS" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Date émission:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="201" y="52" width="174" height="14"/>
+                <reportElement x="201" y="52" width="109" height="14" uuid="1610dba3-cc99-46ce-947d-ddfea1cc3c4b"/>
                 <textElement>
                     <font isBold="true"/>
                 </textElement>
                 <text><![CDATA[Nombre de courriers:]]></text>
             </staticText>
             <textField>
-                <reportElement x="190" y="2" width="100" height="24"/>
+                <reportElement positionType="Float" x="190" y="0" width="100" height="19" uuid="ec80c346-208d-4ded-a2be-687365d40682"/>
+                <box leftPadding="2"/>
+                <textElement verticalAlignment="Middle"/>
                 <textFieldExpression><![CDATA[$P{num_bordereau}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="76" y="19" width="100" height="24"/>
+                <reportElement positionType="Float" x="76" y="19" width="104" height="15" uuid="f0e9e6d4-0385-46ce-b7da-83e0662f989f"/>
+                <box leftPadding="2"/>
                 <textFieldExpression><![CDATA[$P{provenance}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="80" y="36" width="100" height="24"/>
+                <reportElement positionType="Float" x="76" y="36" width="100" height="14" uuid="0431d240-216a-4d7a-9d24-dfd40370f002"/>
+                <box leftPadding="2"/>
                 <textFieldExpression><![CDATA[$P{destination}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="90" y="52" width="100" height="24"/>
+                <reportElement positionType="Float" x="80" y="52" width="100" height="14" uuid="7e9568be-c135-46ac-aa76-b37db141589c"/>
+                <box leftPadding="2"/>
                 <textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{date_emission})]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="310" y="52" width="100" height="24"/>
+                <reportElement positionType="Float" x="310" y="52" width="100" height="14" uuid="61929a1f-16b0-4ac9-989c-606896444061"/>
+                <box leftPadding="2"/>
                 <textFieldExpression><![CDATA[$P{nbre_courrier}]]></textFieldExpression>
             </textField>
+            <image>
+                <reportElement x="450" y="0" width="100" height="66" uuid="9df5af66-1ea8-4f55-9c82-548a1a7b6804"/>
+                <imageExpression><![CDATA["C:/Users/Vadil Kwekam/Downloads/logo.png"]]></imageExpression>
+            </image>
         </band>
     </pageHeader>
-
     <columnHeader>
-        <band height="68">
+        <band height="22" splitType="Stretch">
+            <rectangle radius="0">
+                <reportElement mode="Opaque" x="0" y="1" width="555" height="18" backcolor="#9E9E9E" uuid="4f051a15-7b42-4f32-8af2-ae606ccc70a4">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+            </rectangle>
             <staticText>
-                <reportElement x="0" y="0" width="141" height="68" backcolor="#87836C"/>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font isBold="true"/>
+                <reportElement mode="Opaque" x="417" y="1" width="138" height="18" backcolor="#9E9E9E" uuid="87454a82-3658-4be1-ac8c-34a002b02fcb">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="3"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Comic Sans MS" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date]]></text>
+            </staticText>
+            <textField>
+                <reportElement mode="Opaque" x="0" y="19" width="555" height="3" backcolor="#C4B939" uuid="b7fedea9-bbbf-440a-9389-72f9f9f0ee14"/>
+                <box>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+            </textField>
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="1" width="110" height="18" backcolor="#9E9E9E" uuid="30a8e041-ad02-4203-b0c8-d666022b2784">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="3"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Comic Sans MS" isBold="true"/>
                 </textElement>
                 <text><![CDATA[N°Courrier]]></text>
             </staticText>
             <staticText>
-                <reportElement x="141" y="0" width="138" height="68" backcolor="#87836C"/>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font isBold="true"/>
+                <reportElement mode="Opaque" x="110" y="1" width="169" height="18" backcolor="#9E9E9E" uuid="edc8f869-0cf8-43a8-85ae-749ca7a20794">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="3"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Comic Sans MS" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Expéditeur]]></text>
             </staticText>
             <staticText>
-                <reportElement x="279" y="0" width="138" height="68" backcolor="#87836C"/>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font isBold="true"/>
+                <reportElement mode="Opaque" x="279" y="1" width="138" height="18" backcolor="#9E9E9E" uuid="c671b262-d239-4236-acbb-6620f4a43ea0">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="3"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Comic Sans MS" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Objet]]></text>
             </staticText>
-            <staticText>
-                <reportElement x="417" y="0" width="138" height="68" backcolor="#87836C"/>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font isBold="true"/>
-                </textElement>
-                <text><![CDATA[Date]]></text>
-            </staticText>
         </band>
     </columnHeader>
-
     <detail>
-        <!-- Increased the height of the band from 125 to 150 -->
-        <band height="150">
+        <band height="61" splitType="Stretch">
             <textField>
-                <reportElement x="0" y="10" width="141" height="90"/>
+                <reportElement positionType="Float" stretchType="ContainerHeight" x="0" y="0" width="110" height="15" uuid="9278f585-9a84-4c09-b356-c0a549d57923">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="2"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{numCourrier}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="141" y="10" width="138" height="90"/>
+                <reportElement positionType="Float" stretchType="ContainerHeight" x="110" y="0" width="169" height="15" uuid="603e43cb-e336-452a-81cb-42bc1e673d57">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="2"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="8" isBold="true"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{expediteur}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="279" y="10" width="138" height="90"/>
+                <reportElement positionType="Float" stretchType="ContainerHeight" x="279" y="0" width="138" height="15" uuid="72e793ff-1491-4aba-8d31-c8750152acd2">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="2"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{objet}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="417" y="10" width="138" height="90"/>
+                <reportElement positionType="Float" stretchType="ContainerHeight" x="417" y="0" width="138" height="15" uuid="8cb1043b-df8d-4c44-a9b3-0c358e72242c">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="2"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
                 <textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{courrierDate})]]></textFieldExpression>
             </textField>
+            <textField>
+                <reportElement positionType="Float" x="395" y="40" width="160" height="15" uuid="baf46be5-2152-4381-bc77-c95dd74062d0">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{dossierNumber}]]></textFieldExpression>
+            </textField>
+            <rectangle>
+                <reportElement mode="Opaque" x="141" y="20" width="414" height="13" backcolor="#D9D9D9" uuid="4d32d689-c056-48a5-9d21-8961cd9a3ef2"/>
+            </rectangle>
             <staticText>
-                <reportElement x="0" y="46" width="168" height="41"/>
+                <reportElement mode="Transparent" x="395" y="21" width="160" height="12" uuid="d007eafc-fab2-4e14-bf41-5198fb09ef00"/>
                 <textElement>
-                    <font isBold="true" isItalic="true" size="10"/>
+                    <font fontName="Comic Sans MS" size="8" isBold="true" isItalic="true"/>
                 </textElement>
                 <text><![CDATA[N° de dossier(s) souche(s)]]></text>
             </staticText>
-            <textField>
-                <reportElement x="0" y="60" width="100" height="30"/>
-                <textFieldExpression><![CDATA[$F{dossierNumber}]]></textFieldExpression>
-            </textField>
-            <!-- Display attachments in a frame -->
             <staticText>
-                <reportElement x="0" y="100" width="100" height="20"/>
+                <reportElement x="150" y="20" width="100" height="12" uuid="9a8567bb-7c4c-43ac-9866-8d0a800b64d4"/>
                 <textElement>
-                    <font isBold="true" isItalic="true" size="10"/>
+                    <font fontName="Comic Sans MS" size="8" isBold="true" isItalic="true"/>
                 </textElement>
                 <text><![CDATA[Pièce(s) jointe(s):]]></text>
             </staticText>
-            <frame>
-                <reportElement x="100" y="100" width="400" height="30"/>
-                <textField>
-                    <reportElement x="0" y="0" width="400" height="30"/>
-                    <textFieldExpression><![CDATA[$F{attachments} != null && !$F{attachments}.isEmpty() ? $F{attachments}.toString() : "Aucune pièce jointe"]]></textFieldExpression>
-                </textField>
-            </frame>
+            <rectangle>
+                <reportElement mode="Opaque" x="141" y="40" width="16" height="6" backcolor="#FFFFFF" uuid="b47520d7-4489-4c27-aee2-6283ddf02424">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                    <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineColor="#208F18"/>
+                </graphicElement>
+            </rectangle>
+            <rectangle>
+                <reportElement mode="Opaque" x="375" y="40" width="16" height="6" backcolor="#FFFFFF" uuid="ec96c130-e884-4f9a-8958-20afcc27894b">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                    <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="2.0" lineColor="#208F18"/>
+                </graphicElement>
+            </rectangle>
+            <textField>
+                <reportElement positionType="Float" x="160" y="40" width="200" height="15" uuid="26cdd3d4-70b9-4589-8d2f-6e32dbc2d3f6">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box leftPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{attachments} != null && !$F{attachments}.isEmpty() ? $F{attachments}: "Aucune pièce jointe"]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement positionType="Float" x="141" y="60" width="414" height="1" uuid="b07c063d-1423-454e-91c7-777ab1c73496"/>
+                <graphicElement>
+                    <pen lineWidth="1.0"/>
+                </graphicElement>
+            </line>
         </band>
     </detail>
-
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-
     <pageFooter>
-        <band height="54">
+        <band height="44" splitType="Stretch">
             <staticText>
-                <reportElement x="375" y="1" width="100" height="16"/>
+                <reportElement x="250" y="1" width="29" height="16" uuid="6a90cd47-beee-4e54-987b-3c63d75ddc0c"/>
                 <textElement>
-                    <font isBold="true"/>
+                    <font fontName="Comic Sans MS" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Page ]]></text>
             </staticText>
             <textField>
-                <reportElement x="430" y="0" width="20" height="20"/>
-                <textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+                <reportElement x="280" y="1" width="60" height="16" uuid="afbced37-70bc-463c-b896-3fa444a07c73"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$V{PAGE_NUMBER} +"/"+ $V{PAGE_NUMBER}]]></textFieldExpression>
             </textField>
-            <staticText>
-                <reportElement x="450" y="1" width="100" height="16"/>
-                <textElement>
-                    <font isBold="true"/>
-                </textElement>
-                <text><![CDATA[ sur ]]></text>
-            </staticText>
             <textField>
-                <reportElement x="500" y="0" width="20" height="20"/>
-                <textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+                <reportElement x="190" y="17" width="180" height="13" uuid="10e1b7a7-4897-4f75-a69e-412dfd7337a8"/>
+                <textFieldExpression><![CDATA["Imprimé le " + new SimpleDateFormat("dd").format(new java.util.Date())+"/"+new SimpleDateFormat("MM").format(new java.util.Date())+
+                "/"+new SimpleDateFormat("yyyy").format(new java.util.Date()) + " à "+ new SimpleDateFormat("HH").format(new java.util.Date())+":"+new SimpleDateFormat("mm").format(new java.util.Date())+
+                ":"+new SimpleDateFormat("ss").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="380" y="3" width="160" height="14" uuid="36b6700b-2813-4cf6-aec6-6ca44afa76ce"/>
+                <textFieldExpression><![CDATA["Nom : "]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="380" y="17" width="160" height="14" uuid="7f1efc8e-9969-4c0c-83f0-a89bc8b539d7">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <textFieldExpression><![CDATA["Déchargé le : "]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="380" y="30" width="160" height="14" uuid="48071451-e843-44d5-92a1-65b610581144">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <textFieldExpression><![CDATA["Signature : "]]></textFieldExpression>
             </textField>
         </band>
     </pageFooter>
